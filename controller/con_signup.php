@@ -23,9 +23,6 @@
         if(empty($username)){
             $_SESSION['error'] = "กรุณากรอก username";  
             header('location: ../index.php');
-        }else if(!filter($username,FILTER_VALIDATE_UTF8)){
-            $_SESSION['error'] = "username ของคุณถูกนำไปใช้งานเเล้ว กรุณาใช้ username อื่น";
-            header('location: ../index.php');      
         }else if($check_username){
             $_SESSION['error'] = "username ของคุณถูกนำไปใช้งานเเล้ว กรุณาใช้ username อื่น";
             header('location: ../index.php');
