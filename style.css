@@ -1,0 +1,15 @@
+.text-center{
+    text-align: center;
+}
+
+.text-center{
+    text-align: left;
+    background-color: rgb(56, 56, 56);
+}
+
+p.text-small{
+    font-size: smaller;
+}
+a.forget_pass_button{
+    font-size: x-small;
+}
