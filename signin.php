@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +47,11 @@
         .x-small-font{
             font-size:x-small;
         }
+        .alert {
+            height: 10%;   
+            text-align:center; 
+        }
+        
     </style>
 </head>
 <body>
@@ -54,25 +63,53 @@
                 <div id="form-login" class="col-4">
                     <br>
                     <h3>Sign in </h3>
-                    <p class="text-small">ยินดีต้อนรับกลับสู่ website ของเรา</p> 
+                    <p class="text-small">กรอกข้อมูลเพื่อเข้าสู่ระบบ</p> 
+                    <?php
+                        if(isset($_SESSION['success'])){
+                    ?>
+                    <div class="alert-md alert-primary" role="alert">
+                       <p style="font-size:small;text-align:center;margin-top:0%;">
+                       <?php 
+                        echo $_SESSION['success'];
+                        session_unset();
+                       ?>
+                       </p>
+                    </div>
+                    <?php
+                        }
+                    ?>
+                    <?php
+                        if(isset($_SESSION['error'])){
+                    ?>
+                    <div class="alert-md alert-danger" role="alert">
+                       <p style="font-size:small;text-align:center;margin-top:0%;">
+                       <?php 
+                        echo $_SESSION['error'];
+                        session_unset();
+                       ?>
+                       </p>
+                    </div>
+                    <?php
+                        }
+                    ?>
                     <hr>
                     <form action="controller/con_signin.php" method="POST">
                         <div class="form-group row">
-                                <label for="username" class="col-sm-4 col-form-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspusername</label>
+                                <label for="username" class="col-sm-4 col-form-label small-font">&nbsp&nbsp&nbsp&nbsp&nbspusername</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" id="username" name="username">
+                                <input type="text" class="form-control small-font" id="username" name="username"> 
                             </div>
                         </div>
                         <br>
                         <div class="form-group row">
-                                <label for="password" class="col-sm-4 col-form-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsppassword</label>
+                                <label for="password" class="col-sm-4 col-form-label small-font">&nbsp&nbsp&nbsp&nbsp&nbsppassword</label>
                             <div class="col-sm-7">
-                                <input type="password" class="form-control" id="upassword" name="upassword">
+                                <input type="password" class="form-control small-font" id="upassword" name="upassword">
                             </div>
                         </div>
                         <br>
                         <div class="form-group row">
-                                <label for="staticEmail" class="col-sm-4 col-form-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                                <label for="staticEmail" class="col-sm-4 col-form-label"></label>
                             <div class="col-sm-7">
                                 <div class="d-grid gap-2">
                                     <button type="submit" class="btn btn-primary btn-sm">ยืนยันการเข้าสู่ระบบ</button>

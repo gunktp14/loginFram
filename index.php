@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +47,11 @@
         .x-small-font{
             font-size:x-small;
         }
+        .alert{
+            height: 10%;   
+            text-align:center; 
+        }
+        
     </style>
 </head>
 <body>
@@ -55,6 +64,48 @@
                     <br>
                     <h3>Sign up </h3>
                     <p class="text-small">กรุณากรอกข้อมูลให้ครบถ้วน</p> 
+                    <?php
+                        if(isset($_SESSION['success'])){
+                    ?>
+                    <div class="alert-md alert-primary" role="alert">
+                       <p style="font-size:small;text-align:center;margin-top:0%;">
+                       <?php 
+                        echo $_SESSION['success'];
+                        session_unset();
+                       ?>
+                       </p>
+                    </div>
+                    <?php
+                        }
+                    ?>
+                    <?php
+                        if(isset($_SESSION['error'])){
+                    ?>
+                    <div class="alert-md alert-danger" role="alert">
+                       <p style="font-size:small;text-align:center;margin-top:0%;">
+                       <?php 
+                        echo $_SESSION['error'];
+                        session_unset();
+                       ?>
+                       </p>
+                    </div>
+                    <?php
+                        }
+                    ?>
+                    <?php
+                        if(isset($_SESSION['warning'])){
+                    ?>
+                    <div class="alert-md alert-danger" role="alert">
+                       <p style="font-size:small;text-align:center;margin-top:0%;">
+                       <?php 
+                        echo $_SESSION['warning'];
+                        session_unset();
+                       ?>
+                       </p>
+                    </div>
+                    <?php
+                        }
+                    ?>
                     <hr>
                     <form action="controller/con_signup.php" method="POST">
                         <div class="form-group row">

@@ -5,34 +5,58 @@
     $obj= new method_stmt();
     
     if(isset($_POST['sign_up'])){
-        echo("submited");
         $username = $_POST['username'];
         $upassword = $_POST['upassword'];
         $cpassword = $_POST['cpassword'];
         $email = $_POST['email'];
         $urole = "user";
+
+        // $array_info_user = array();
+        // $array_info_user['username'] = $username;
+        // $array_info_user['upassword'] = $upassword;
+        // $array_info_user['email'] = $email;
+        // $array_info_user['urole'] = $urole;
+        // print_r($array_info_user);
+
+        $check_username = $obj->check_Username($username);
         
         if(empty($username)){
-            $_SESSION['Error'] = "กรุณากรอก username";
-            echo("username");
+            $_SESSION['error'] = "กรุณากรอก username";  
+            header('location: ../index.php');
+        }else if(!filter($username,FILTER_VALIDATE_UTF8)){
+            $_SESSION['error'] = "username ของคุณถูกนำไปใช้งานเเล้ว กรุณาใช้ username อื่น";
+            header('location: ../index.php');      
+        }else if($check_username){
+            $_SESSION['error'] = "username ของคุณถูกนำไปใช้งานเเล้ว กรุณาใช้ username อื่น";
+            header('location: ../index.php');
         }else if(empty($upassword)){
-            $_SESSION['Error'] = "กรุณากรอก password";
-            echo("password");
+            $_SESSION['error'] = "กรุณากรอก password";
+            header('location: ../index.php');
         }else if(strlen($upassword) < 5 ||strlen($upassword) > 20){
-            $_SESSION['Error'] = "รหัสผ่านต้องอยู่ระหว่าง 5 - 20";
-            echo("รหัสผ่านต้องอยู่ระหว่าง 5-20");
+            $_SESSION['error'] = "รหัสผ่านต้องมีตัวอักษรอยู่ระหว่าง 5 - 20";
+            header('location: ../index.php');
+        }else if($upassword != $cpassword){
+            $_SESSION['error'] = "รหัสผ่านของคุณไม่ตรงกัน กรุณากรอกข้อมูลอีกครั้ง";
+            header('location: ../index.php');
         }else if(empty($email)){
-            $_SESSION['Error'] = "กรุณากรอก Email";
-            echo("email");
+            $_SESSION['error'] = "กรุณากรอก Email";
+            header('location: ../index.php');
         }else if(!filter_var($email,FILTER_VALIDATE_EMAIL)){
-            $_SESSION['Error'] = "กรุณากรอก Email ให้ถูกต้อง";
-            echo("กรุณากรอก Email ให้ถูกต้อง");
+            $_SESSION['error'] = "กรุณากรอก Email ให้ถูกต้อง";
+            header('location: ../index.php');
         }else{
             $rs2 = $obj->check_Email($email);
-            if($rs2 == false){
-                echo("มี Email อยู่เเล้วในระบบ");
+            if($rs2){
+                $_SESSION['warning']="This email already has been used!";
+                header("location: ../index.php");
             }else{
-                echo("ดำเนินการต่อได้");
+                $rs2 = $obj->register($username,$upassword,$email,$urole);
+                if($rs2){
+                    $_SESSION['success']="ได้ทำการสมัครสมาชิกเสร็จเรียบร้อย <a href='signin.php'>เข้าสู่ระบบ</a>";
+                    header('location: ../index.php');
+                }else{
+
+                }
             }
         }
 
