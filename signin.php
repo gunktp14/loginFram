@@ -1,5 +1,11 @@
 <?php
     session_start();
+
+    if(isset($_SESSION['admin_login'])){
+        header("location: ./view/role/admin.php");
+    }else if(isset($_SESSION['user_login'])){
+        header("location: ./view/role/user.php");
+    }
 ?>
 
 <!DOCTYPE html>

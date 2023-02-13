@@ -63,6 +63,19 @@
                 return false;
             }
         }
+
+        public function checkAdmin($username){
+            $sql = "SELECT urole FROM user_tb WHERE username = :username";
+            $query = $this->ConDB->prepare($sql);
+            $query->bindParam(":username",$username);
+            if($query->execute()){
+                $result = $query->fetch(PDO::FETCH_ASSOC);
+                return $result;
+                return true;
+            }else {
+                return false;
+            }
+        }
         
 
     }

@@ -1,6 +1,12 @@
 <?php
     session_start();
+
+    if(!isset($_SESSION['user_login'])){
+        header("location: ../../signin.php");
+    }else {
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,28 +68,32 @@
 
                 <div id="form-login" class="col-4">
                     <br>
-                    <h3>user </h3>
-                    <p class="text-small">ยินดีต้อนรับ ผู้ใช้งาน Role: User</p> 
+                    <h3>User </h3>
+                    <p class="text-small">ยินดีต้อนรับ ผู้ใช้งาน Role: user</p> 
                     <hr>
                     <?php
-                        if(isset($_SESSION['success'])){
+                        if(isset($_SESSION['user_login'])){
                     ?>
                     <div class="alert-md alert-primary" role="alert">
                        <p style="font-size:small;text-align:center;margin-top:0%;">
                        <?php 
-                        echo $_SESSION['success'];
-                        session_unset();
+                        echo $_SESSION['user_login'];
                        ?>
                        </p>
                     </div>
                     <?php
                         }
+                    }
                     ?>
+                    <form action="../../controller/con_logout.php" method="POST">
+                        <button type="submit" class="btn btn-danger btn-sm">ออกจากระบบ</button>
+                    </form>
+                    <br>
                     </div>
                 </div>
 
                 <div class="col-4"></div> 
-            
+                    
             </div>
         </div>
 </body>
